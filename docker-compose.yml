@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DASK_SCHEDULER_ADDRESS=:8786
+    volumes:
+      - ./data:/data
+    networks:
+      - dask-network
+
+networks:
+  dask-network:
+    driver: bridge
