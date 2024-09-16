@@ -4,9 +4,9 @@ from dask.distributed import Client
 
 client = Client(":8786")
 
-ratings = dd.read_csv('/data/u.data', delimiter='\t', header=None, names=['user_id', 'item_id', 'rating', 'timestamp'])
-items = dd.read_csv('/data/u.item', delimiter='|', header=None, usecols=[0, 1], names=['item_id', 'title'])
-users = dd.read_csv('/data/u.user', delimiter='|', header=None, names=['user_id', 'age', 'gender', 'occupation', 'zip_code'])
+ratings = dd.read_csv('/data/u.data', delimiter='\t', header=None, names=['user_id', 'item_id', 'rating', 'timestamp'], encoding='latin1')
+items = dd.read_csv('/data/u.item', delimiter='|', header=None, usecols=[0, 1], names=['item_id', 'title'], encoding='latin1')
+users = dd.read_csv('/data/u.user', delimiter='|', header=None, names=['user_id', 'age', 'gender', 'occupation', 'zip_code'], encoding='latin1')
 
 data = ratings.merge(items, on='item_id').merge(users, on='user_id')
 
