@@ -1,17 +1,19 @@
-version: '3.8'
-
 services:
+  scheduler:
+    build: .
+    command: dask scheduler
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      - DASK_SCHEDULER_ADDRESS=:8786
-    volumes:
-      - ./data:/data
-    networks:
-      - dask-network
+      - DASK_IP=scheduler
+    depends_on:
+      - scheduler
 
-networks:
-  dask-network:
-    driver: bridge
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: dask worker scheduler:8786
